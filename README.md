@@ -1,5 +1,5 @@
 # Android-stuff
-Some Android commands and codes
+Some Android commands
 
 # ADB Shell Commands
 ## list installed packages:
