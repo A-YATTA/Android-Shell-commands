@@ -1,7 +1,7 @@
 Some Android shell commands
 
 # ADB Shell Commands
-## list installed packages:
+## List installed packages:
 ```
 pm list packages
 ```
@@ -29,6 +29,7 @@ dumpsys package | grep "Package \[" | cut -d "\[" -f2 | cut -d "\]" -f1
 
 ## Disable/Uninstall Apps
 
+Adding `--user 0` can help to uninstall/disable some system Apps
 **Uninstall**
 ```
 pm uninstall PACKAGE_NAME
@@ -62,12 +63,12 @@ sqlite> select * from accounts;
 
 SECTION can be: secure, global or system
 
-**list all SECTION**
+**List all SECTION**
 ```
 settings list SECTION
 ```
 
-**get value of KEY in SECTION**
+**Get value of KEY in SECTION**
 ```
 settings get SECTION KEY
 ```
@@ -130,9 +131,10 @@ Example, get list of contacts:
 content query --uri content://com.android.contacts/data --projection display_name:data1:data4:contact_id
 ```
 
+
 ## Dumpsys
 
-**Pending System Update**
+**Pending System update**
 ```
 dumpsys device_policy  | grep "Pending System Update"
 ```
@@ -171,6 +173,8 @@ packages=$(adb -s emulator-5554 shell pm list packages -3 | cut -f2 -d':')
 for package in $packages; do
 adb backup -apk -f $package.ab $package
 adb shell input keyevent 61 # password field
+# if you need to encrypt your backup uncomment the line bellow and edit change the PASSWORD
+# adb shell input text PASSWORD
 adb shell input keyevent 61 # Do not Backup option
 adb shell input keyevent 61 # Backup
 adb shell input keyevent 66 # confirm
@@ -182,9 +186,7 @@ done
 adb shell content query --uri content://sms/
 ```
 
-## Dump All contacts
+## Dump all contacts
 ```
 adb shell content query --uri content://com.android.contacts/data
 ```
-
-
