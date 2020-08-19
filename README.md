@@ -6,14 +6,17 @@ Some Android shell commands
 pm list packages
 ```
 By default the command list enabled applications (-e).
+
 **List Third party Apps**
 ```
 pm list packages -3 
 ```
+
 **List System Apps**
 ```
 pm list packages -s 
 ```
+
 **Disabled Apps**
 ```
 pm list packages -d 
@@ -42,6 +45,7 @@ pm disable PACKAGE_NAME
 ```
 pm list users
 ```
+
 **Remove user**
 ```
 pm remove-user USER_ID 
@@ -58,16 +62,37 @@ sqlite> select * from accounts;
 
 SECTION can be: secure, global or system
 
-**list**
+**list all SECTION**
 ```
 settings list SECTION
 ```
 
+**get value of KEY in SECTION**
+```
+settings get SECTION KEY
+```
+Content query can also be used. For example to get global settings key "adb_enabled" that verify if ADB is enabled:
+```
+content query --uri content://settings/global --projection name:value --where 'name=adb_enabled" 
+```
+
 **Add/Edit Key**
+Edit or add KEY with the value VALUE:
 ```
 settings put SECTION KEY VALUE
 ```
+Or 
+```
+content insert --uri content://settings/SECTION --bind name:s:KEY --bind value:VALUE_TYPE:VALUE
+```
+Where VALUE_TYPE is : 'i' for integer, 's' for string an 'b' for boolean.
+
+The example bellow disable ADB :
+```
+content insert --uri content://settings/global --bind name:s:adb_enabled --bind value:i:0
+```
 > Some usefull settings can be founded in [AMDH](https://github.com/SecTheTech/AMDH/blob/master/config/settings.json) project.
+
 
 ## Managing Apps
 
@@ -98,7 +123,7 @@ pm grant PACKAGE_NAME PERMISSION
 
 **Content query**
 ```
-content query --uri content://PACKAGE_NAME/ENTITY
+content query --uri content://PACKAGE_NAME
 ```
 Example, get list of contacts:
 ```
@@ -106,6 +131,7 @@ content query --uri content://com.android.contacts/data --projection display_nam
 ```
 
 ## Dumpsys
+
 **Pending System Update**
 ```
 dumpsys device_policy  | grep "Pending System Update"
@@ -121,11 +147,13 @@ Information can be:
 - etc...
 
 ## Dump current UI
+
 ```
 uiautomator dump 
 ```
 
 # Automation
+
 ## Revoke permissions to App
 In this example, it revoke bluetooth permissions to all third party Apps:
 ```
