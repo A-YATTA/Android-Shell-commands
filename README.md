@@ -1,5 +1,4 @@
-# Android-stuff
-Some Android commands
+Some Android shell commands
 
 # ADB Shell Commands
 ## list installed packages:
@@ -124,5 +123,35 @@ Information can be:
 ## Dump current UI
 ```
 uiautomator dump 
+```
+
+# Automation
+## Revoke permissions to App
+In this example, it revoke bluetooth permissions to all third party Apps:
+```
+adb shell 
+for package in $(pm list packages -3 | cut -f2 -d":"); do
+  pm revoke $package android.permission.BLUETOOTH
+  pm revoke $package android.permission.BLUETOOTH_ADMIN 
+done
+```
+
+## Backup each individually
+Only third party Apps that has backup enabled will be backuped:
+```
+packages=$(adb -s emulator-5554 shell pm list packages -3 | cut -f2 -d':')
+for package in $packages; do
+adb backup -apk -f $package.ab $package
+done
+```
+
+## Dump all SMS
+``` 
+adb shell content query --uri content://sms/
+```
+
+## Dump All contacts
+```
+adb shell content query --uri content://com.android.contacts/data
 ```
 
