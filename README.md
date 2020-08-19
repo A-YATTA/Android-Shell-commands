@@ -142,6 +142,10 @@ Only third party Apps that has backup enabled will be backuped:
 packages=$(adb -s emulator-5554 shell pm list packages -3 | cut -f2 -d':')
 for package in $packages; do
 adb backup -apk -f $package.ab $package
+adb shell input keyevent 61 # password field
+adb shell input keyevent 61 # Do not Backup option
+adb shell input keyevent 61 # Backup
+adb shell input keyevent 66 # confirm
 done
 ```
 
@@ -154,4 +158,5 @@ adb shell content query --uri content://sms/
 ```
 adb shell content query --uri content://com.android.contacts/data
 ```
+
 
