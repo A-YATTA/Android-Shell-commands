@@ -136,7 +136,7 @@ for package in $(pm list packages -3 | cut -f2 -d":"); do
 done
 ```
 
-## Backup each individually
+## Backup each App individually
 Only third party Apps that has backup enabled will be backuped:
 ```
 packages=$(adb -s emulator-5554 shell pm list packages -3 | cut -f2 -d':')
