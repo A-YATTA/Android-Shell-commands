@@ -184,7 +184,9 @@ done
 ## Dump all SMS
 ``` 
 adb shell content query --uri content://sms/
+adb shell content query --uri content://sms --projection _id:date:date_sent:deleted:body 
 ```
+
 
 ## Dump all contacts
 ```
