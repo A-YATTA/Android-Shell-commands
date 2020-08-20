@@ -190,3 +190,17 @@ adb shell content query --uri content://sms/
 ```
 adb shell content query --uri content://com.android.contacts/data
 ```
+
+## List Apps with Internet permission
+```
+for package in $(pm list packages -3 | cut -f2 -d":"); do
+dumpsys package $package | grep "android.permission.INTERNET: granted=true" > /dev/null && echo $package
+done;
+```
+
+## list Apps and their data usage
+```
+for package in $(pm list packages | cut -f2 -d":"); do echo $package; pm dump $package | grep  "Mobile network"; done;
+```
+
+
